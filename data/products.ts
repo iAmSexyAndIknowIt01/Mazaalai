@@ -1,5 +1,6 @@
 // data/products.ts
 export type ProductVariant = {
+  thumbnail: string | StaticImport;
   id: string;
   name: string;
   price: number;

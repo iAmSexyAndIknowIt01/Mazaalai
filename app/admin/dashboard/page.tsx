@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { products as initialProducts, ProductVariant } from "../../data/products";
+import { products as initialProducts, ProductVariant } from "../../../data/products";
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState<ProductVariant[]>(initialProducts);

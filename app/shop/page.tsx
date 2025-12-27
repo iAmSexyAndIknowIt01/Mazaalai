@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { products } from '@/data/products';
 
 export default function ShopPage() {
   return (
@@ -18,51 +18,60 @@ export default function ShopPage() {
         </div>
       </header>
 
-      {/* PRODUCT */}
-      <main className="max-w-7xl mx-auto px-5 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* PRODUCT LIST */}
+      <main className="max-w-7xl mx-auto px-5 py-20">
+        <h1 className="text-3xl font-semibold mb-12 text-center">
+          Манай <span className="text-pink-500">бүтээгдэхүүнүүд</span>
+        </h1>
 
-        {/* IMAGE */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-pink-300/40 blur-3xl rounded-full" />
-          <Image
-            src="/products/mazaalai-alert.jpg"
-            alt="Mazaalai Alert"
-            width={600}
-            height={600}
-            className="relative rounded-3xl shadow-xl"
-          />
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white rounded-3xl p-6 shadow hover:shadow-lg transition flex flex-col"
+            >
+              <div className="relative h-60 mb-6">
+                <Image
+                  src={product.thumbnail}
+                  alt={product.name}
+                  fill
+                  className="object-cover rounded-2xl"
+                />
+              </div>
 
-        {/* INFO */}
-        <div>
-          <p className="text-pink-500 text-sm font-medium mb-4">
-            ХУВИЙН АЮУЛГҮЙ БАЙДАЛ
-          </p>
+              <h2 className="text-xl font-semibold mb-2">
+                {product.name}
+              </h2>
 
-          <h1 className="text-4xl font-bold mb-6">
-            Mazaalai Alert
-          </h1>
+              <p className="text-sm text-gray-600 mb-4">
+                {product.description}
+              </p>
 
-          <p className="text-gray-600 mb-8">
-            Авсаархан, татахад идэвхждэг, чанга дуу болон гэрлээр анхааруулдаг
-            хувийн хамгаалалтын төхөөрөмж.
-          </p>
+              {/* COLORS */}
+              <div className="flex gap-2 mb-4">
+                {product.colors.map((c) => (
+                  <span
+                    key={c.name}
+                    className="w-5 h-5 rounded-full border"
+                    title={c.name}
+                    style={{ backgroundColor: c.name.toLowerCase() }}
+                  />
+                ))}
+              </div>
 
-          <ul className="space-y-3 mb-8 text-sm text-gray-700">
-            <li>• Дуу + гэрэл</li>
-            <li>• Эмэгтэй, хүүхдэд тохиромжтой</li>
-            <li>• Цүнх, түлхүүрт зүүх боломжтой</li>
-            <li>• Цэнэг шаардахгүй</li>
-          </ul>
+              <div className="mt-auto flex items-center justify-between">
+                <span className="text-lg font-bold">
+                  {product.price.toLocaleString()}₮
+                </span>
 
-          <div className="flex items-center gap-6 mb-10">
-            <span className="text-4xl font-bold">59,000₮</span>
-            <span className="text-sm text-gray-500">Нэг удаагийн төлбөр</span>
-          </div>
-
-          <button className="w-full sm:w-auto bg-pink-500 text-white px-10 py-4 rounded-full hover:bg-pink-600 transition">
-            Сагсанд нэмэх
-          </button>
+                <Link href={`/shop/${product.id}`}>
+                  <button className="bg-pink-500 text-white px-5 py-2 rounded-full text-sm hover:bg-pink-600 transition">
+                    Дэлгэрэнгүй
+                  </button>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
 
