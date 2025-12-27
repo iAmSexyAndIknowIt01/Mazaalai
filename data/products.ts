@@ -1,3 +1,5 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
 // data/products.ts
 export type ProductVariant = {
   thumbnail: string | StaticImport;
@@ -18,6 +20,7 @@ export const products: ProductVariant[] = [
       { name: 'Pink', image: '/products/alert-pink.jpg' },
       { name: 'Blue', image: '/products/alert-blue.jpg' },
     ],
+    thumbnail: '/products/mazaalai-alert.jpg'
   },
   {
     id: 'alert-pro',
@@ -28,5 +31,6 @@ export const products: ProductVariant[] = [
       { name: 'Pink', image: '/products/alert-pink.jpg' },
       { name: 'Blue', image: '/products/alert-blue.jpg' },
     ],
+    thumbnail: '/products/mazaalai-alert.jpg'
   },
 ];
