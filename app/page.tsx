@@ -4,6 +4,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { JSX } from 'react';
+import Link from 'next/link';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,9 +21,11 @@ export default function Home(): JSX.Element {
           <h1 className="text-lg font-semibold">
             Mazaalai<span className="text-pink-500">Alert</span>
           </h1>
-          <button className="bg-pink-500 text-white px-5 py-2 rounded-full text-sm shadow hover:bg-pink-600 transition">
-            Захиалах
-          </button>
+          <Link href ="/shop">
+            <button className="bg-pink-500 text-white px-5 py-2 rounded-full text-sm shadow hover:bg-pink-600 transition">
+              Захиалах
+            </button>
+          </Link>
         </div>
       </header>
 
@@ -53,9 +56,11 @@ export default function Home(): JSX.Element {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-pink-500 text-white px-8 py-4 rounded-full shadow hover:bg-pink-600 transition w-full sm:w-auto">
-                Одоо авах
-              </button>
+              <Link href="/shop">
+                <button className="bg-pink-500 text-white px-8 py-4 rounded-full shadow hover:bg-pink-600 transition w-full sm:w-auto">
+                  Одоо авах
+                </button>
+              </Link>
               <button className="border border-gray-300 px-8 py-4 rounded-full text-gray-700 hover:bg-gray-100 transition w-full sm:w-auto">
                 Дэлгэрэнгүй
               </button>
@@ -212,9 +217,11 @@ export default function Home(): JSX.Element {
             <p className="text-sm text-gray-500 mb-8">
               Нэг удаагийн төлбөр
             </p>
-            <button className="w-full bg-pink-500 text-white py-4 rounded-full hover:bg-pink-600 transition">
-              Одоо захиалах
-            </button>
+            <Link href="/shop">
+              <button className="w-full bg-pink-500 text-white py-4 rounded-full hover:bg-pink-600 transition">
+                Одоо захиалах
+              </button>
+            </Link>
           </div>
         </motion.div>
       </section>
