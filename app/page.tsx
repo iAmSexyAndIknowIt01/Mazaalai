@@ -139,7 +139,7 @@ export default function Home(): JSX.Element {
               ].map(([step, title, img]) => (
                 <div
                   key={step}
-                  className="min-w-[280px] bg-white rounded-3xl overflow-hidden shadow"
+                  className="min-w-70 bg-white rounded-3xl overflow-hidden shadow"
                 >
                   <div className="relative h-52">
                     <Image src={img} alt={title} fill className="object-cover" />
