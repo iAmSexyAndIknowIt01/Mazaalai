@@ -4,10 +4,9 @@ if (!process.env.MONGODB_URI) {
   throw new Error("Please add MONGODB_URI to environment variables");
 }
 
-const client = new MongoClient(process.env.MONGODB_URI!, {
-  tls: true,
-  // SRV URI-д directConnection бүү ашигла
-});
+// Production болон dev ялгах шаардлагагүй
+const client = new MongoClient(process.env.MONGODB_URI!);
+
 const clientPromise = client.connect();
 
 export default clientPromise;
