@@ -1,12 +1,12 @@
 import { MongoClient } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
-  throw new Error("Please add MONGODB_URI to .env.local");
+  throw new Error("Please add MONGODB_URI to environment variables");
 }
 
 const client = new MongoClient(process.env.MONGODB_URI!, {
   tls: true,
-  tlsAllowInvalidCertificates: true, // <-- энэ нэмэгдсэн
+  // SRV URI-д directConnection бүү ашигла
 });
 const clientPromise = client.connect();
 
