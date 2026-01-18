@@ -85,8 +85,8 @@ export default function NewProductPage() {
           onClick={submit}
           disabled={loading}
           className="rounded-lg px-6 py-2 text-sm text-white
-            bg-[var(--brand-primary)]
-            hover:bg-[var(--brand-secondary)]
+            bg-(--brand-primary)
+            hover:bg-(--brand-secondary)
             disabled:opacity-40"
         >
           {loading ? "Saving..." : "Publish"}
@@ -180,7 +180,7 @@ export default function NewProductPage() {
           {/* Description */}
           <section className="rounded-xl border bg-white p-6">
             <textarea
-              className="w-full rounded-lg border px-3 py-2 min-h-[120px]"
+              className="w-full rounded-lg border px-3 py-2 min-h-30"
               placeholder="Product description..."
               value={form.description}
               onChange={(e) =>

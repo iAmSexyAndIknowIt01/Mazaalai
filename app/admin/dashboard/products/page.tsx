@@ -35,7 +35,7 @@ export default async function ProductsPage() {
           href="/admin/dashboard/products/new"
           className="
             rounded-lg px-4 py-2 text-sm text-white
-            bg-[var(--brand-primary)]
+            bg-(--brand-primary)
           "
         >
           + Add Product

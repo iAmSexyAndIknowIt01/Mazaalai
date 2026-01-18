@@ -1,64 +1,112 @@
-// app/shop/[id]/page.tsx
-'use client';
-
-import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { products } from '@/data/products';
 
-export default function ProductDetail({
+type Product = {
+  _id: string;
+  name: string;
+  price: number;
+  stock: number;
+  description?: string;
+  images?: string[];
+  type: string;
+};
+
+async function getProduct(id: string): Promise<Product | null> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/products/${id}`,
+    { cache: 'no-store' }
+  );
+
+  if (!res.ok) return null;
+  return res.json();
+}
+
+export default async function ProductDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>; // ✅ Promise
 }) {
-  const product = products.find((p) => p.id === params.id);
-  if (!product) return notFound();
+  const { id } = await params; // ✅ заавал await
 
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const product = await getProduct(id);
+
+  if (!product) {
+    notFound();
+  }
 
   return (
-    <div className="min-h-screen bg-pink-50 px-5 py-20">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <div className="min-h-screen bg-pink-50 text-gray-900">
 
-        {/* IMAGE */}
-        <Image
-          src={selectedColor.image}
-          alt={product.name}
-          width={600}
-          height={600}
-          className="rounded-3xl shadow-xl"
-        />
+      {/* HEADER */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-pink-100">
+        <div className="max-w-7xl mx-auto px-5 py-4">
+          <Link href="/shop" className="text-sm text-pink-500">
+            ← Буцах
+          </Link>
+        </div>
+      </header>
+
+      {/* CONTENT */}
+      <main className="max-w-5xl mx-auto px-5 py-20 grid md:grid-cols-2 gap-12">
+
+        {/* IMAGES */}
+        <div className="space-y-4">
+          {(product.images?.length
+            ? product.images
+            : ['/placeholder.png']
+          ).map((src, i) => (
+            <div
+              key={i}
+              className="relative aspect-square rounded-3xl overflow-hidden bg-white"
+            >
+              <Image
+                src={src}
+                alt={product.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
 
         {/* INFO */}
-        <div>
-          <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-          <p className="text-gray-600 mb-6">{product.description}</p>
-
-          {/* COLOR SELECT */}
-          <div className="flex gap-3 mb-8">
-            {product.colors.map((c) => (
-              <button
-                key={c.name}
-                onClick={() => setSelectedColor(c)}
-                className={`w-10 h-10 rounded-full border-2 ${
-                  selectedColor.name === c.name
-                    ? 'border-pink-500'
-                    : 'border-gray-300'
-                }`}
-                style={{ backgroundColor: c.name.toLowerCase() }}
-              />
-            ))}
+        <div className="space-y-6">
+          <div>
+            <span className="text-xs uppercase text-pink-500">
+              {product.type}
+            </span>
+            <h1 className="text-3xl font-semibold mt-2">
+              {product.name}
+            </h1>
           </div>
 
-          <p className="text-3xl font-bold mb-8">
-            {product.price.toLocaleString()}₮
+          <p className="text-gray-600 leading-relaxed">
+            {product.description || 'Тайлбар оруулаагүй байна'}
           </p>
 
-          <button className="bg-pink-500 text-white px-10 py-4 rounded-full hover:bg-pink-600 transition">
-            Сагсанд нэмэх
-          </button>
+          <div className="border-t pt-6 space-y-3">
+            <div className="flex justify-between">
+              <span className="text-lg font-bold">
+                {product.price.toLocaleString()}₮
+              </span>
+              <span className="text-sm text-gray-500">
+                Stock: {product.stock}
+              </span>
+            </div>
+
+            <button
+              className="
+                w-full bg-pink-500 text-white
+                py-3 rounded-full
+                hover:bg-pink-600 transition
+              "
+            >
+              Худалдан авах
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
